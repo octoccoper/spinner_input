@@ -5,6 +5,15 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     reload  = browserSync.reload;
 
+// Static server
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    });
+});
+
 gulp.task('less', function () {
     return gulp.src('less/*')
         .pipe(less()) // Using gulp-less
@@ -21,6 +30,7 @@ gulp.task('minify-css', () => {
 
 gulp.task('watch', function () {
     gulp.watch('less/*.less', gulp.series('less'));
+    gulp.watch("css/*.css").on('change', browserSync.reload);
 });
 
 gulp.task('autoprefixer', function () {
